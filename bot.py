@@ -173,7 +173,6 @@ def start(update: Update, context: CallbackContext):
 
             # self invite block
             if ref_id != user_id:
-
                 key = f"{user_id}_{ref_id}"
 
                 # duplicate invite block
@@ -297,9 +296,7 @@ def button_handler(update: Update, context: CallbackContext):
         file.name = "cookie.txt"
 
         context.bot.send_document(
-            chat_id=query.message.chat.id,
-            document=file,
-            caption="🎵 Spotify Cookie"
+            chat_id=query.message.chat.id, document=file, caption="🎵 Spotify Cookie"
         )
 
         cooldowns[user_id] = now + get_cooldown(user_id, now)
@@ -308,30 +305,36 @@ def button_handler(update: Update, context: CallbackContext):
         query.message.reply_text("✅ Spotify Cookie Sent Successfully")
 
     elif data == "premium":
-
         # ⭐ ADMIN BYPASS
         if str(user_id) == str(ADMIN_ID):
             kb = [
-                [InlineKeyboardButton("📺 Get Netflix Account", callback_data="netflixacc")],
-                [InlineKeyboardButton("🔙 Back", callback_data="back")]
+                [
+                    InlineKeyboardButton(
+                        "📺 Get Netflix Account", callback_data="netflixacc"
+                    )
+                ],
+                [InlineKeyboardButton("🔙 Back", callback_data="back")],
             ]
             query.edit_message_text(
                 f"👑 ADMIN PANEL\n\n📺 Netflix Accounts: {len(netflix_accounts)}",
-                reply_markup=InlineKeyboardMarkup(kb)
+                reply_markup=InlineKeyboardMarkup(kb),
             )
             return
 
         # ⭐ PREMIUM CHECK
         if is_premium_user(user_id, now):
-
             kb = [
-                [InlineKeyboardButton("📺 Get Netflix Account", callback_data="netflixacc")],
-                [InlineKeyboardButton("🔙 Back", callback_data="back")]
+                [
+                    InlineKeyboardButton(
+                        "📺 Get Netflix Account", callback_data="netflixacc"
+                    )
+                ],
+                [InlineKeyboardButton("🔙 Back", callback_data="back")],
             ]
 
             query.edit_message_text(
                 f"💎 Premium Active\n\n📺 Netflix Accounts: {len(netflix_accounts)}",
-                reply_markup=InlineKeyboardMarkup(kb)
+                reply_markup=InlineKeyboardMarkup(kb),
             )
 
         else:
@@ -341,13 +344,17 @@ def button_handler(update: Update, context: CallbackContext):
 
             kb = [
                 [InlineKeyboardButton("👥 Invite Friends", callback_data="invite")],
-                [InlineKeyboardButton("💰 Buy Premium Instant", callback_data="buypremium")],
-                [InlineKeyboardButton("🔙 Back", callback_data="back")]
+                [
+                    InlineKeyboardButton(
+                        "💰 Buy Premium Instant", callback_data="buypremium"
+                    )
+                ],
+                [InlineKeyboardButton("🔙 Back", callback_data="back")],
             ]
 
             query.edit_message_text(
                 f"🔒 Premium Locked\n\n📊 Progress: {progress} ({invite_count}/3)\nInvite {need} more friends",
-                reply_markup=InlineKeyboardMarkup(kb)
+                reply_markup=InlineKeyboardMarkup(kb),
             )
     elif data == "buypremium":
         text = "💎 Buy Premium Instant\n\n📋 Benefits:\n• Faster Cookie Access\n• 1 Hour Cooldown\n• Priority Stock\n\nContact Admin:\n@Mrf1005"
@@ -516,6 +523,7 @@ def remove_premium(update: Update, context: CallbackContext):
         update.message.reply_text(f"✅ Premium removed for {uid}")
     else:
         update.message.reply_text(f"❌ User {uid} not found")
+
 
 def premium_list(update: Update, context: CallbackContext):
     if update.message.from_user.id != ADMIN_ID:

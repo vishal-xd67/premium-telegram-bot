@@ -1,0 +1,48 @@
+modules = ["python-3.11"]
+
+[agent]
+expertMode = true
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Run Hello World"
+
+[[workflows.workflow]]
+name = "Run Hello World"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 bot.py"
+
+[workflows.workflow.metadata]
+outputType = "console"
+
+[[workflows.workflow]]
+name = "Bot"
+mode = "sequential"
+author = 25615107
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python3 bot.py"
+
+[userenv]
+
+[userenv.shared]
+BOT_TOKEN = "8645594144:AAGSp_PyyvK_OAKhtp67lbFy2RW1-NRDjwk"
+
+[[ports]]
+localPort = 8080
+externalPort = 80
+
+[nix]
+packages = ["psmisc"]
